@@ -3,6 +3,7 @@
 // ESM
 import { request } from 'node:http';
 import Fastify, { FastifyReply } from 'fastify';
+import proxy from '@fastify/http-proxy';
 
 const fastify = Fastify({
   logger: true
@@ -35,7 +36,15 @@ async function proxyRequest(path: string, bootstrap: Record<string, unknown>, re
   req.end();
 }
 
-// Declare a route
+// Proxy next internal connections
+fastify.register(proxy, {
+  upstream: 'http://localhost:3001',
+  prefix: '/_next', // optional
+  rewritePrefix: '/_next', // optional
+  http2: false // optional
+})
+
+// Declare a page route
 fastify.get('/fry', (request, reply) => {
   proxyRequest('/fry', {
     character: {
@@ -44,7 +53,7 @@ fastify.get('/fry', (request, reply) => {
   }, reply)
 })
 
-// Declare a route
+// Declare a page route
 fastify.get('/bender', (request, reply) => {
   proxyRequest('/bender', {
     character: {

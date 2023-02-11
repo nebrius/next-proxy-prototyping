@@ -5,6 +5,7 @@
     "start": "ts-node --esm index.ts"
   },
   "dependencies": {
+    "@fastify/http-proxy": "^8.4.0",
     "fastify": "^4.13.0",
     "ts-node": "^10.9.1"
   },

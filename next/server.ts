@@ -12,11 +12,12 @@ const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
   createServer(async (req, res) => {
+    console.log(req.method, req.url)
     if (req.method !== 'POST' || req.url !== '/page') {
-      res.writeHead(400, { "Content-Type": "text/plain" });
-      res.write('Invalid request');
+      const parsedUrl = parse(req.url || '', true)
+      await handle(req, res, parsedUrl)
+      return;
     }
-    console.log('Reading request');
     let rawData: Buffer[] = []
     req.on('data', (chunk) => {
       rawData.push(chunk)
@@ -28,6 +29,7 @@ app.prepare().then(() => {
         ) as { path: string, bootstrap: Record<string, unknown> };
         (req as any).bootstrap = bootstrap
         const { pathname, query } = parse(path, true)
+        console.log(pathname, query)
         await app.render(req, res, pathname!, query)
       } catch (e) {
         res.writeHead(400, { "Content-Type": "text/plain" });
