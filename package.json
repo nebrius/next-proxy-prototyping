@@ -1,0 +1,22 @@
+{
+  "name": "next-proxy-prototyping",
+  "version": "1.0.0",
+  "description": "Had a hare-brained idea, wanted to play around. You probably shouldn't look at this.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nebrius/next-proxy-prototyping.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nebrius/next-proxy-prototyping/issues"
+  },
+  "homepage": "https://github.com/nebrius/next-proxy-prototyping#readme",
+  "dependencies": {
+    "ts-node": "^10.9.1"
+  }
+}

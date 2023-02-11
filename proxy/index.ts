@@ -39,9 +39,10 @@ async function proxyRequest(path: string, bootstrap: Record<string, unknown>, re
 // Proxy next internal connections
 fastify.register(proxy, {
   upstream: 'http://localhost:3001',
-  prefix: '/_next', // optional
-  rewritePrefix: '/_next', // optional
-  http2: false // optional
+  prefix: '/_next',
+  rewritePrefix: '/_next',
+  http2: false,
+  websocket: true
 })
 
 // Declare a page route
