@@ -11,15 +11,7 @@ interface Props {
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const props: Props = {
-    character: {
-      name: 'Bender'
-    },
-    factory: {
-      name: "Mom's Friendly Robot Factory"
-    }
-  }
-  return { props };
+  return { props: (context.req as any).bootstrap };
 }
 
 export default function Bender({character, factory}: Props) {

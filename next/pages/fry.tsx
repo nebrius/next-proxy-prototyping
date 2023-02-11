@@ -8,12 +8,7 @@ interface Props {
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const props: Props = {
-    character: {
-      name: 'Fry'
-    },
-  }
-  return { props };
+  return { props: (context.req as any).bootstrap };
 }
 
 export default function Fry({ character }: Props) {
