@@ -30,6 +30,8 @@ app.prepare().then(() => {
         (req as any).bootstrap = bootstrap
         const { pathname, query } = parse(path, true)
         console.log(pathname, query)
+
+        // Can't use render for .json client side route changes. We have to do a low level rewrite of the req object
         await app.render(req, res, pathname!, query)
       } catch (e) {
         res.writeHead(400, { "Content-Type": "text/plain" });

@@ -15,7 +15,7 @@ export default function Fry({ character }: Props) {
   return (
     <>
     <div>This is {character.name}&apos;s page</div>
-    <Link href="/bender">Go to Bender&apos;s page</Link>
+    <Link href="/characters/bender">Go to Bender&apos;s page</Link>
     </>
   )
 }

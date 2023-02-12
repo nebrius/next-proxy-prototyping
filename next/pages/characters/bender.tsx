@@ -19,7 +19,7 @@ export default function Bender({character, factory}: Props) {
     <>
     <div>This is {character.name}&apos;s page</div>
     <div>{character.name} was built at {factory.name}</div>
-    <Link href="/fry">Go to Fry&apos;s page</Link>
+    <Link href="/characters/fry">Go to Fry&apos;s page</Link>
     </>
   )
 }

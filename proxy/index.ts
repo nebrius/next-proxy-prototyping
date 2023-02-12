@@ -2,7 +2,7 @@
 
 // ESM
 import { request } from 'node:http';
-import Fastify, { FastifyReply } from 'fastify';
+import Fastify, { FastifyReply, RouteHandlerMethod } from 'fastify';
 import proxy from '@fastify/http-proxy';
 
 const fastify = Fastify({
@@ -36,35 +36,39 @@ async function proxyRequest(path: string, bootstrap: Record<string, unknown>, re
   req.end();
 }
 
-// Proxy next internal connections
+function createRoute(route: string, getSsrData: () => Record<string, unknown>) {
+  fastify.get(route, (request, reply) => {
+    proxyRequest(route, getSsrData(), reply);
+  });
+  // The proxy seems seems to take precedence here, even though it's defined first
+  fastify.get(`/_next/data/development/${route}.json`, (request, reply) => {
+    proxyRequest(`/_next/data/development/${route}.json`, getSsrData(), reply);
+  });
+}
+
+createRoute('/characters/fry', () => ({
+  character: {
+    name: 'Fry'
+  }
+}));
+
+createRoute('/characters/bender', () =>({
+  character: {
+    name: 'Bender'
+  },
+  factory: {
+    name: "Mom's Friendly Robot Factory"
+  }
+}));
+
+// Proxy next internal connections, including websockets for dev HMR
 fastify.register(proxy, {
   upstream: 'http://localhost:3001',
   prefix: '/_next',
   rewritePrefix: '/_next',
   http2: false,
   websocket: true
-})
-
-// Declare a page route
-fastify.get('/fry', (request, reply) => {
-  proxyRequest('/fry', {
-    character: {
-      name: 'Fry'
-    }
-  }, reply)
-})
-
-// Declare a page route
-fastify.get('/bender', (request, reply) => {
-  proxyRequest('/bender', {
-    character: {
-      name: 'Bender'
-    },
-    factory: {
-      name: "Mom's Friendly Robot Factory"
-    }
-  }, reply)
-})
+});
 
 // Run the server!
 fastify.listen({ port: 3000 }, (err, address) => {
