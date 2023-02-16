@@ -19,7 +19,7 @@
       "type": "node",
       "request": "launch",
       "runtimeArgs": ["--nolazy", "-r", "ts-node/register"],
-      "args": ["./server.ts", "-v"],
+      "args": ["./src/server.ts", "-v"],
       "cwd": "${workspaceFolder}/next",
       "internalConsoleOptions": "openOnSessionStart",
       "skipFiles": ["<node_internals>/**", "node_modules/**"],

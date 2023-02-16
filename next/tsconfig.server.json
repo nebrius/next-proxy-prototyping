@@ -2,6 +2,12 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
       "target": "ES2017",
-      "module": "commonjs"
+      "module": "commonjs",
+      "paths": {
+        "node:http": ["./src/types/http.d.ts"],
+        "*": [
+            "node_modules/*"
+        ]
+    }
   }
 }

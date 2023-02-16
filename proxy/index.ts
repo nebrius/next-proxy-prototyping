@@ -40,10 +40,6 @@ function createRoute(route: string, getSsrData: () => Record<string, unknown>) {
   fastify.get(route, (request, reply) => {
     proxyRequest(route, getSsrData(), reply);
   });
-  // The proxy seems seems to take precedence here, even though it's defined first
-  fastify.get(`/_next/data/development/${route}.json`, (request, reply) => {
-    proxyRequest(`/_next/data/development/${route}.json`, getSsrData(), reply);
-  });
 }
 
 createRoute('/characters/fry', () => ({
